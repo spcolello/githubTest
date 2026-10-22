@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#6657d9" />
+  <title>Math Practice</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/home" aria-label="Math Practice home"><span class="brand-mark" aria-hidden="true">✦</span><span>Math Practice</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#/home" data-nav>Practice</a>
+      <a href="#/mistakes" data-nav>Mistakes <span id="mistakeBadge" class="badge" hidden>0</span></a>
+      <a href="#/stats" data-nav>Stats</a>
+    </nav>
+  </header>
+  <main id="app" tabindex="-1"></main>
+
+  <template id="homeTemplate">
+    <section class="hero panel">
+      <div><p class="eyebrow">Build your math streak</p><h1>Ready for a quick practice session?</h1><p>Choose what you want to practice, pick a level, and start solving.</p></div>
+      <div class="hero-art" aria-hidden="true">12<br><span>× 4</span></div>
+    </section>
+    <section class="panel setup-panel" aria-labelledby="setup-title">
+      <div class="section-heading"><div><p class="eyebrow">Step 1</p><h2 id="setup-title">Choose operations</h2></div><button class="text-button" id="selectAllOps" type="button">Select all</button></div>
+      <div class="operation-grid" role="group" aria-label="Arithmetic operations">
+        <button type="button" class="choice-card operation active" data-op="addition"><span class="op-symbol">+</span><span>Addition</span></button>
+        <button type="button" class="choice-card operation" data-op="subtraction"><span class="op-symbol">−</span><span>Subtraction</span></button>
+        <button type="button" class="choice-card operation" data-op="multiplication"><span class="op-symbol">×</span><span>Multiplication</span></button>
+        <button type="button" class="choice-card operation" data-op="division"><span class="op-symbol">÷</span><span>Division</span></button>
+      </div>
+      <div class="setup-row">
+        <div><p class="eyebrow">Step 2</p><h2>Difficulty</h2><div class="segmented" role="group" aria-label="Difficulty"><button type="button" data-difficulty="easy" class="active">Easy</button><button type="button" data-difficulty="medium">Medium</button><button type="button" data-difficulty="hard">Hard</button></div></div>
+        <div><p class="eyebrow">Step 3</p><h2>Questions</h2><div class="segmented" role="group" aria-label="Session length"><button type="button" data-length="5">5</button><button type="button" data-length="10" class="active">10</button><button type="button" data-length="20">20</button></div></div>
+      </div>
+      <p id="setupError" class="form-error" role="alert" hidden>Select at least one operation.</p>
+      <button id="startSession" class="primary-button large" type="button">Start practice</button>
+    </section>
+  </template>
+
+  <template id="practiceTemplate">
+    <section class="practice-shell">
+      <div class="session-topline"><button id="quitSession" class="icon-button" type="button" aria-label="Quit session">←</button><div class="progress-wrap" aria-label="Session progress"><div class="progress-meta"><span id="progressText"></span><span id="sessionScore"></span></div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></div></div>
+      <article class="question-card" aria-live="polite">
+        <p id="questionOperation" class="pill"></p><h1 id="questionText" class="question-text"></h1><p class="question-prompt">Choose the answer you think is correct.</p>
+        <div id="answers" class="answer-grid"></div><div id="feedback" class="feedback" hidden></div>
+        <button id="revealAnswer" class="secondary-button" type="button">Reveal answer</button>
+        <div id="selfReport" class="self-report" hidden><p>How did you do?</p><div><button id="markIncorrect" type="button" class="danger-button">I missed it</button><button id="markCorrect" type="button" class="success-button">I got it</button></div></div>
+        <button id="nextQuestion" class="primary-button large" type="button" hidden>Next question</button>
+      </article>
+    </section>
+  </template>
+
+  <template id="summaryTemplate">
+    <section class="panel summary-panel">
+      <div class="summary-icon" aria-hidden="true">★</div><p class="eyebrow">Session complete</p><h1 id="summaryTitle">Nice work!</h1><p id="summarySubtitle"></p>
+      <div class="summary-grid"><div><strong id="summaryAccuracy"></strong><span>Accuracy</span></div><div><strong id="summaryCorrect"></strong><span>Correct</span></div><div><strong id="summaryIncorrect"></strong><span>Incorrect</span></div></div>
+      <div class="button-row"><a class="secondary-button button-link" href="#/mistakes">Review mistakes</a><button id="practiceAgain" class="primary-button" type="button">Practice again</button></div>
+    </section>
+  </template>
+
+  <template id="mistakesTemplate"><section class="page-heading"><p class="eyebrow">Learn from misses</p><h1>Mistake review</h1><p>Revisit questions you missed, then practice a similar one.</p></section><section id="mistakesList" class="stack"></section></template>
+  <template id="statsTemplate"><section class="page-heading"><p class="eyebrow">Your progress</p><h1>Statistics</h1><p>Your practice data is saved in this browser.</p></section><section id="statsCards" class="stats-grid"></section><section class="panel"><div class="section-heading"><h2>Accuracy by operation</h2></div><div id="operationStats" class="bar-list"></div></section><section class="panel history-panel"><div class="section-heading"><h2>Practice history</h2><button id="resetData" class="text-button danger-text" type="button">Reset data</button></div><div id="historyList"></div></section></template>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
